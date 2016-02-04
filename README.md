@@ -5,6 +5,7 @@
 * desc      : cmmmon nodejs service
 * copyright : created and amended by jie.zou, 2014-04-19 0954
 *             updated by jie.zou, 2016-01-09 1006, amended framework as a simple copyright for canudilo.com
+* 建议使用webstorm启动服务
 
 ## Descrition 
 
@@ -22,9 +23,10 @@
     > vi common/constants.js     // common constants
 
 3. invoke url
-    http://localhost:3000/bamboo/promotion.bo?type=list                            //query all data from the file
-    http://localhost:3000/bamboo/promotion.bo?type=add&data={"id":1,"name":"test"} //add data into the file (any type data，but can be useful by json format data )
+    > http://localhost:3000/bamboo/promotion.bo?type=list                            //query all data from the file
+    > http://localhost:3000/bamboo/promotion.bo?type=add&data={"id":1,"name":"test"} //add data into the file (any type data，but can be useful by json format data )
 
 4. develop or modify module code
-    can be refresh promotion code by module controller file ( /routes/service/promotion.js )
+
+   can be refresh promotion code by module controller file ( /routes/service/promotion.js )
 
