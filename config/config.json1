@@ -1,0 +1,24 @@
+
+{
+    "sit": {
+        "http_port"        : 3000,
+        "timeout"          : 5000,
+
+        "save_file_address" : {
+            "promotion_list" : "f:/develop/promotion_list/promotion_list.json",
+            "annual_meeting" : "f:/develop/common_service/data/001.txt",
+            "login_user"      : "f:/develop/common_service/data/user.json"
+        }
+    },
+
+
+    "prd": {
+        "http_port"        : 3000,
+        "timeout"          : 5000,
+
+        "save_file_address" : {
+            "promotion_list" : "f:/develop/promotion_list/promotion_list.json"
+        }
+    }
+
+}

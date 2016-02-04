@@ -1,0 +1,15 @@
+{
+    "name": "cluster-demo",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node master"
+    },
+    "dependencies": {
+        "mongodb": ">=1.2.14",
+        "nconf": ">=0.6.7",
+        "bunyan": ">=0.21.1",
+        "express-useragent": ">=0.0.7-1",
+        "when": ">=2.0.1"
+    }
+}

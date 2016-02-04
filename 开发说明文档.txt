@@ -1,0 +1,136 @@
+
+开发说明文档
+
+------------------------------------
+  描述 
+------------------------------------
+  1. 本程序采用 nodejs 为源码
+  2. 当下本程序采用文件存储
+  3. 文件的起始在 worker.js 这里开始
+  4. 可直接用 nodejs 运行
+
+
+
+------------------------------------
+  文档结构说明 
+------------------------------------
+
+  - readme.md     程序的标准说明文件 (不用修改) 
+
+  - worker.js     程序的开始文件，用来定义 http 服务的端口，请求与返回，最大支持并发数等 (不用修改) 
+
+  - app-conf.js   程序启动时的相关配置加载处理，如指定是 sit / prd 相关的配置文件 
+
+  - config        程序的所有配置 (含程序配置与业务配置等) 
+    -- config.json  当下为程序的配置 (用 json 格式的数据存放)
+    -- filter.js    为主要的 http 请求配置文件 （即哪个 url 请求对应到哪个 js 业务处理，类似 java 的 controller ）
+
+  - common        通用方法与工具类的定义 
+    -- constants.js 全局通用常量的定义
+    -- cookie.js    cookie工具方法 (不用修改) 
+    -- http.js      http工具方法 (不用修改) 
+    -- json.js      json工具方法 (不用修改) 
+    -- logger.js    日志工具方法 (不用修改) 
+    -- time.js      时间工具方法 (不用修改)  
+    -- ...          其它，待完善 (不用修改) 
+
+  - routes        主要业务处理的 js 文件 (类似 java 的 service ) 
+    -- default.js   为默认的或未匹配到请求时的处理 
+    -- service      为对应各个模块的业务处理 js 文件
+       -- annual.js   为对应年会相关的业务逻辑处理 js 文件 
+       -- ...         其它，待完善 
+
+  - logs          为程序运行的日志输出文件夹
+    -- info.log     输出程序运行的主要日志 (类似 java.logger.info) 
+    -- error.log    
+
+  - db            为连接各种数据库的 js 文件 (含与 mysql, oracle, mongodb, solr, redis, coutch 等多种数据库操作，类似 java 的 dao )
+    -- ...          其它，待完善 (有些已删掉了) 
+
+  - data          为程序一些文件的存放地 (类似 java 的 upload/download 这样的文件夹) 
+    -- 001.txt      测试读出与写入时用到的
+    -- read.json    测试读出与写入时用到的
+    -- write.json   测试读出与写入时用到的
+
+
+
+
+------------------------------------
+  主要编码方面说明 
+------------------------------------
+
+  1. app-conf.js
+     这里在不同的运行环境时，要修改下 sit/prd 代表用的配置不相同 
+
+  2. common/config.json
+     这里主要是配置不同环境下，程序运行的一些配置，如 http 的端口，超时，支持的并发数，临时读写文件，数据库连接参数等 
+
+  3. common/filter.js
+     这里主要是配置所有 http 请求由哪个业务处理的 js 文件来处理，一般对接口的描述写全些便于后续容易维护，详细如下：
+
+       var annual        = require('../routes/service/annual');             // 把所有对应请求的 js 文件加载进来
+       ...
+       var filter_conf   =                                                  // http 请求对应的 url, 业务逻辑处理 js 文件, 请求说明等方面的配置  
+       [
+          //annual
+         {
+           "url"         : "/canudilo/annualtest.ca",                       // 哪个 url 
+           "controller"  : annual.controller,                               // 哪个 js 业务逻辑处理文件中的哪个方法  
+           "desc"        : "just a test module (file operation test)",      // http 请求服务的一个描述 
+           "invoke"      : "http://localhost:3000/canudilo/annualtest.bo",  // 请求调用的 url 样例 (便于大家直接 cv 过来测试) 
+           "param"       : "?type=list/add/update/delete &data={...}",      // 请求的参数说明 
+           "cplt1"       : "created by jie.zou, 2016-01-09 1022"            // 请求接口的版本说明
+         },
+       ...
+
+  4. routes/service/anuual.js
+     这里主要是业务逻辑处理的 js 文件与内容 
+
+       var http       = require('http');  // 这些主要是引入其它的模块 (类似 java 的 import)
+       ...
+       http.Agent.maxSockets = 100;       // 最大并发支持数
+       ...
+       var writeDataToFile = function...  // 方法定义
+       ...
+       module.exports.controller = fu...  // 对应 http.url 的主要业务处理方法
+       ...   (这里就是主要的处理代码了)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

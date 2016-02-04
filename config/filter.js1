@@ -1,0 +1,78 @@
+/**
+ * description: request filter module
+ * copyright  : jie.zou, 2014-01-02 1148, created
+ *              jie.zou, 2016-01-09 1006, updated a simple copyright for canudilo.com
+ * */
+
+'use strict';
+
+var promotion    = require('../routes/service/promotion');
+var annual        = require('../routes/service/annual');
+var login         = require('../routes/service/login');
+var otherdefault = require('../routes/default');
+
+
+//deny request dispatch config
+var deny_conf =
+[
+    {
+        "/deny.gm":"",
+        "desc":"deny request config"
+    }
+];
+
+//access request dispatch config
+var filter_conf =
+[
+    //common
+    {
+        "url"         : "/bamboo/promotion.bo",
+        "controller" : promotion.controller,
+        "desc"        : "promotion plan module (include basic oper like crud)",
+        "invoke"     : "http://localhost:3000/bamboo/promotion.bo",
+        "param"      : "type=list/add/update/delete, data={...}",
+        "cplt1"      : "created by jie.zou, 2014-04-19 1001 "
+    },
+
+    {
+        "url"         : "/canudilo/annualtest.ca",
+        "controller" : annual.controller,
+        "desc"        : "just a test module (file operation test)",
+        "invoke"     : "http://localhost:3000/canudilo/annualtest.bo",
+        "param"      : "type=list/add/update/delete, data={...}",
+        "cplt1"      : "created by jie.zou, 2016-01-09 1022"
+    },
+
+    //登录
+    {
+        "url"        : "/canudiloAu/login.ca",
+        "controller" : login.controller,
+        "desc"       : "LoginModule",
+        "invoke"     : "http://localhost:3000/canudiloAu/login.do",
+        "param"      : "type=login, data={...}",
+        "cplt1"      : "created by jie.zou, 2016-01-20 1022"
+    },
+
+
+    //default
+    {
+        "url"        : "/default.gm",
+        "controller" : otherdefault.controller,
+        "desc"       : "other request.  默认处理"
+    }
+];
+
+var getController = function (request_url){
+    for(var i=0; i<filter_conf.length; i++){
+//console.log('33, filter.js, i:'+i+', request_url:'+request_url+', url:'+filter_conf[i].url+', is_url:'+request_url.search(filter_conf[i].url));
+        if(request_url.search(filter_conf[i].url)!=-1){
+             return filter_conf[i].controller;
+        }
+    }
+    return filter_conf[filter_conf.length-1].controller;
+}
+
+module.exports.deny_conf     = deny_conf;
+module.exports.filter_conf   = filter_conf;
+module.exports.getController = getController;
+

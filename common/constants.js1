@@ -1,0 +1,30 @@
+/**
+ * description: request filter module
+ * copyright  : jie.zou, 2014-03-10 1000, created
+ * */
+
+'use strict';
+
+var data = {
+    type : {
+        list   : "list",
+        add    : "add",
+        update : "update",
+        delete : "delete",
+        login   : "login"
+    },
+
+    promotion_data : [],
+
+    annual_data : [],
+
+    login_data : []
+
+};
+
+module.exports.bamboo = data;
+module.exports.annual = data;
+module.exports.login  = data;
+
+
+
